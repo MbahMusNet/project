@@ -79,11 +79,28 @@ class Front extends CI_Controller
   public function daftar_artikel()
   {
     $this->load->model('Post_model');
-    $data = array(
-      "record" => $this->Post_model->read("tbl_post")
-    );
+		$this->load->library('pagination');
 
-    $this->load->view('daftar_artikel', $data);
+    /* pagination configuration */
+		$config['base_url'] = base_url('front/daftar_artikel/hal/');
+		$config['total_rows'] = $this->Post_model->total_rows('tbl_post');
+		$config['per_page'] = 5;		
+		$config['full_tag_open'] = '<div class="paging">';
+		$config['full_tag_close'] = '</div>';
+		$config['first_url'] = '';
+    
+    // initialize pagination lib
+		$this->pagination->initialize($config);		
+
+		$limit = $config['per_page'];
+		$offset = (int) $this->uri->segment(4);
+
+		$data = array(
+				'record' => $this->Post_model->read('tbl_post', $limit, $offset),
+				'pagination' => $this->pagination->create_links()
+			);
+
+		$this->load->view('daftar_artikel', $data);
   }
 
   public function edit_artikel($id = 0)
