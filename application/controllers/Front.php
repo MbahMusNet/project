@@ -124,4 +124,32 @@ class Front extends CI_Controller
     $this->Post_model->delete($id, "tbl_post");
     redirect(base_url('front/daftar_artikel'));
   }
+
+  public function register(){
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('username', 'Username', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_email_check');
+		$this->form_validation->set_rules('password', 'Password', 'required|min_length[5]');
+		$this->form_validation->set_message('required', '{field} masih kosong, silahkan diisi');
+		$this->form_validation->set_message('valid_email', 'silahkan ketikkan format email yang benar');
+		$this->form_validation->set_message('min_length', 'password kurang dari 5 digit');
+		$this->form_validation->set_error_delimiters('<p class="alert">','</p>');
+
+		if($this->form_validation->run() == FALSE){
+			$this->load->view('form_register');
+		}
+		else{
+			$this->load->view('register_sukses');
+		}
+	}
+
+	public function email_check($str){
+		if($str == 'admin@gmail.com'){
+			$this->form_validation->set_message('email_check', 'Email sudah digunakan, mohon diganti yang lain');
+			return FALSE;
+		}
+		else{
+			return TRUE;
+		}
+	}
 }
