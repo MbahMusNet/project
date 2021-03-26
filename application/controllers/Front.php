@@ -89,7 +89,7 @@ class Front extends CI_Controller
 		$config['full_tag_close'] = '</div>';
 		$config['first_url'] = '';
     
-    // initialize pagination lib
+    // initialize pagination config
 		$this->pagination->initialize($config);		
 
 		$limit = $config['per_page'];
