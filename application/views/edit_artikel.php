@@ -35,13 +35,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <body>
   <h1>Form Edit Artikel</h1>
-  <form method="POST" action="<?php echo base_url('front/update'); ?>">
-    <label>Judul</label><input type="text" name="title" value="<?php echo $record->title; ?>" /><br />
-    <label>Penulis</label><input type="text" name="author" value="<?php echo $record->author; ?>" /><br />
-    <label>Konten</label><textarea name="content"><?php echo $record->content; ?></textarea><br />
-    <input type="hidden" name="ID" value="<?php echo $record->ID; ?>" />
-    <input type="submit" name="submit" value="Ubah Artikel" />
-  </form>
+  <?= form_open_multipart(base_url("front/update")), 'method="POST"'; ?>
+
+  <label>Judul</label><input type="text" name="title" value="<?php echo $record->title; ?>" /><br />
+  <label>Penulis</label><input type="text" name="author" value="<?php echo $record->author; ?>" /><br />
+  <label>Konten</label><textarea name="content"><?php echo $record->content; ?></textarea><br />
+  <label>Featured Image:</label><input type="file" name="userfile" size="20" id=""><br />
+  <input type="hidden" name="ID" value="<?php echo $record->ID; ?>" />
+  <input type="submit" name="submit" value="Ubah Artikel" />
+  <?= form_close(); ?>
 </body>
 
 </html>
