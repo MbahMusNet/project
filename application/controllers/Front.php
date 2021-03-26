@@ -66,23 +66,25 @@ class Front extends CI_Controller
 
 				$this->load->library('upload', $config);
 
-				if (!$this->upload->do_upload('userfile')) {
-					echo $this->upload->display_errors();
+				if ($this->upload->do_upload('userfile')) {
+					$upload_data = $this->upload->data();
+					$featured_image = base_url() . 'uploads/' . $upload_data['file_name'];
+					$this->load->model('Post_model');
+
+					$data = array(
+						'title' => $post['title'],
+						'author' => $post['author'],
+						'date' => date('Y-m-d'),
+						'content' => $post['content'],
+						'featured_image' => $featured_image
+					);
+
+					$this->Post_model->create('tbl_post', $data);
+					$this->load->view('tambah_artikel_berhasil', $data);
 				} else {
-					print_r($this->upload->data());
+					$data = array('error' => $this->upload->display_errors());
+					$this->load->view('tambah_artikel', $data);
 				}
-
-				$this->load->model('Post_model');
-
-				$data = array(
-					'title' => $post['title'],
-					'author' => $post['author'],
-					'date' => date('Y-m-d'),
-					'content' => $post['content']
-				);
-
-				$this->Post_model->create('tbl_post', $data);
-				$this->load->view('tambah_artikel_berhasil', $data);
 			}
 		} else {
 			$this->load->view('tambah_artikel');
