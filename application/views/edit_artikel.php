@@ -40,7 +40,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <label>Judul</label><input type="text" name="title" value="<?php echo $record->title; ?>" /><br />
   <label>Penulis</label><input type="text" name="author" value="<?php echo $record->author; ?>" /><br />
   <label>Konten</label><textarea name="content"><?php echo $record->content; ?></textarea><br />
-  <label>Featured Image:</label><input type="file" name="userfile" size="20" id=""><br />
+  <label>Featured Image:</label>
+  <img src="<?= $record->featured_image; ?>" width="200" /><input type="file" name="userfile" size="20" id=""><br />
   <input type="hidden" name="ID" value="<?php echo $record->ID; ?>" />
   <input type="submit" name="submit" value="Ubah Artikel" />
   <?= form_close(); ?>

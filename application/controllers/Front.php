@@ -18,39 +18,15 @@ class Front extends CI_Controller
 
 	public function tambah_artikel()
 	{
-
-		//get the "kirim" method using URI Library
 		$action = $this->uri->segment(3);
 		$this->load->helper('form');
-
-		//form validation load
 		$this->load->library('form_validation');
 		if ($action == 'kirim') {
 			$post = $this->input->post();
 
-			/*if(!empty($post['title']) && !empty($post['author']) && !empty($post['content'])){
-				$this->load->model('Post_model');
-
-				$data = array(
-						'title' => $post['title'],
-						'author' => $post['author'],
-						'date' => date('Y-m-d'),
-						'content' => $post['content']
-					);
-
-				$this->Post_model->create('tbl_post',$data);
-				$this->load->view('tambah_artikel_berhasil',$data);
-			}
-			else{
-				$this->load->view('tambah_artikel_gagal',$data);
-			}*/
-
-			//setting up form validation
 			$this->form_validation->set_rules('title', 'Judul Artikel', 'required');
 			$this->form_validation->set_rules('author', 'Penulis', 'required');
 			$this->form_validation->set_rules('content', 'Isi artikel', 'required');
-
-			//create a custom message to each error
 			$this->form_validation->set_message('required', '%s masih kosong, silahkan diisi');
 			$this->form_validation->set_error_delimiters('<p class="alert">', '</p>');
 
@@ -58,17 +34,17 @@ class Front extends CI_Controller
 				$this->load->view('tambah_artikel');
 			} else {
 
-				$config['upload_path'] = "./uploads/";
+				$config['upload_path'] = './uploads/';
 				$config['allowed_types'] = 'gif|jpg|png';
 				$config['max_size'] = 100;
 				$config['max_width'] = 1024;
 				$config['max_height'] = 768;
 
 				$this->load->library('upload', $config);
-
 				if ($this->upload->do_upload('userfile')) {
 					$upload_data = $this->upload->data();
 					$featured_image = base_url() . 'uploads/' . $upload_data['file_name'];
+
 					$this->load->model('Post_model');
 
 					$data = array(
@@ -82,7 +58,9 @@ class Front extends CI_Controller
 					$this->Post_model->create('tbl_post', $data);
 					$this->load->view('tambah_artikel_berhasil', $data);
 				} else {
-					$data = array('error' => $this->upload->display_errors());
+					$data = array(
+						'error' => $this->upload->display_errors()
+					);
 					$this->load->view('tambah_artikel', $data);
 				}
 			}

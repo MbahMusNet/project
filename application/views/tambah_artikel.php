@@ -39,18 +39,17 @@
 	<a href="<?= base_url('front/tambah_artikel'); ?>">Tambah Artikel</a> |
 	<a href="<?= base_url('front/daftar_artikel'); ?>">Daftar Artikel</a>
 	<br /><br />
-	<?php // echo validation_errors(); 
-	?>
-	<?= form_open_multipart(base_url("front/tambah_artikel/kirim")), 'method="POST"'; ?>
+	<?php echo form_open_multipart(base_url("front/tambah_artikel/kirim"), 'method="POST"'); ?>
 	<?php echo form_error('title'); ?>
 	<label>Judul Artikel:</label> <input type="text" name="title" value="<?php echo set_value('title'); ?>" /><br />
 	<?php echo form_error('author'); ?>
 	<label>Penulis:</label> <input type="text" name="author" value="<?php echo set_value('author'); ?>" /><br />
 	<?php echo form_error('content'); ?>
 	<label>Isi Artikel:</label> <textarea name="content"><?php echo set_value('content'); ?></textarea><br />
-	<label>Featured Image:</label><input type="file" name="userfile" size="20" id=""><br />
+
+	<label>Featured Image:</label><input type="file" name="userfile" size="20" /><br />
 	<input type="submit" name="submit" value="Tambah Artikel" />
-	<?= form_close(); ?>
+	<?php echo form_close(); ?>
 </body>
 
 </html>
